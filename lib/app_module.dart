@@ -1,11 +1,23 @@
-import 'package:flutter_firebase_authentication/create_account_page.dart';
-import 'package:flutter_firebase_authentication/logged_page.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'login_page.dart';
+import 'features/authentication/data/datasources_interfaces/firebase_authentication_datasource.dart';
+import 'features/authentication/data/repositories/firebase_authentication_repository.dart';
+import 'features/authentication/domain/repositories_interfaces/firebase_authentication_repository.dart';
+import 'features/authentication/domain/usecases/firebase_authentication_usecase.dart';
+import 'features/authentication/external/firebase_authentication_datasource.dart';
+import 'features/authentication/presentation/pages/create_account_page.dart';
+import 'features/authentication/presentation/pages/logged_page.dart';
+import 'features/authentication/presentation/pages/login_page.dart';
 
 class AppModule extends Module {
   @override
-  final List<Bind> binds = [];
+  final List<Bind> binds = [
+    Bind<IFirebaseAuthenticationDatasource>(
+        (i) => FirebaseAuthenticationDatasource()),
+    Bind<IFirebaseAuthenticationRepository>(
+        (i) => FirebaseAuthenticationRepository()),
+    Bind<IFirebaseAuthenticationUsecase>(
+        (i) => FirebaseAuthenticationUsecase()),
+  ];
 
   @override
   final List<ModularRoute> routes = [

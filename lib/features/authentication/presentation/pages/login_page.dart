@@ -1,9 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_authentication/logged_page.dart';
+import 'package:flutter_firebase_authentication/features/authentication/domain/usecases/firebase_authentication_usecase.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import 'create_account_page.dart';
+import 'logged_page.dart';
+import 'pages/../create_account_page.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -41,15 +41,25 @@ class _LoginPageState extends State<LoginPage> {
             ),
             ElevatedButton(
               onPressed: () async {
-                try {
-                  await FirebaseAuth.instance.signInWithEmailAndPassword(
-                      email: emailController.text,
-                      password: passwordController.text);
-                  Modular.to.pushNamedAndRemoveUntil(
-                      LoggedPage.route, ModalRoute.withName("/"));
-                } catch (e) {
-                  print(e);
-                }
+                (await Modular.get<IFirebaseAuthenticationUsecase>()
+                        .signInWithEmailAndPassword(
+                            emailController.text, passwordController.text))
+                    .fold(
+                  (l) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(l.message),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  },
+                  (r) {
+                    Modular.to.pushNamedAndRemoveUntil(
+                      LoggedPage.route,
+                      ModalRoute.withName("/"),
+                    );
+                  },
+                );
               },
               child: Text("Login"),
             ),
