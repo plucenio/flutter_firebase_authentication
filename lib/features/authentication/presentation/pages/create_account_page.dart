@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_authentication/features/authentication/domain/usecases/firebase_authentication_usecase.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class CreateAccountPage extends StatefulWidget {
   static String route = "/create_account";
@@ -31,19 +33,27 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
             ),
             ElevatedButton(
               onPressed: () async {
-                try {
-                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                      email: emailController.text,
-                      password: passwordController.text);
-                } on FirebaseAuthException catch (e) {
-                  if (e.code == 'weak-password') {
-                    print('The password provided is too weak.');
-                  } else if (e.code == 'email-already-in-use') {
-                    print('The account already exists for that email.');
-                  }
-                } catch (e) {
-                  print(e);
-                }
+                (await Modular.get<IFirebaseAuthenticationUsecase>()
+                        .createUserWithEmailAndPassword(
+                            emailController.text, passwordController.text))
+                    .fold(
+                  (l) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(l.message),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  },
+                  (r) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("${r.user.email} created."),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                  },
+                );
               },
               child: Text("Create account"),
             )

@@ -21,4 +21,19 @@ class FirebaseAuthenticationRepository
       return Left(UnexpectedFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<IFailure, UserCredential>> createUserWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      var userCredential =
+          await Modular.get<IFirebaseAuthenticationDatasource>()
+              .createUserWithEmailAndPassword(email, password);
+      return Right(userCredential);
+    } on FirebaseAuthException catch (e) {
+      return Left(FirebaseAuthFailure(e.message));
+    } on Exception catch (e) {
+      return Left(UnexpectedFailure(e.toString()));
+    }
+  }
 }

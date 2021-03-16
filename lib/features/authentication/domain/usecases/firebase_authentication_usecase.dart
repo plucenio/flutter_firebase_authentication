@@ -7,6 +7,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 abstract class IFirebaseAuthenticationUsecase {
   Future<Either<IFailure, UserCredential>> signInWithEmailAndPassword(
       String email, String password);
+
+  Future<Either<IFailure, UserCredential>> createUserWithEmailAndPassword(
+      String email, String password);
 }
 
 class FirebaseAuthenticationUsecase implements IFirebaseAuthenticationUsecase {
@@ -15,5 +18,12 @@ class FirebaseAuthenticationUsecase implements IFirebaseAuthenticationUsecase {
       String email, String password) {
     return Modular.get<IFirebaseAuthenticationRepository>()
         .signInWithEmailAndPassword(email, password);
+  }
+
+  @override
+  Future<Either<IFailure, UserCredential>> createUserWithEmailAndPassword(
+      String email, String password) {
+    return Modular.get<IFirebaseAuthenticationRepository>()
+        .createUserWithEmailAndPassword(email, password);
   }
 }
