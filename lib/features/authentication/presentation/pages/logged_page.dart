@@ -26,6 +26,35 @@ class _LoggedPageState extends State<LoggedPage> {
           children: <Widget>[
             ElevatedButton(
               onPressed: () async {
+                (await Modular.get<IFirebaseAuthenticationUsecase>()
+                        .sendPasswordResetEmail("plucenio@hotmail.com"))
+                    .fold(
+                  (l) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(l.message),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  },
+                  (r) async {
+                    await ScaffoldMessenger.of(context)
+                        .showSnackBar(
+                          SnackBar(
+                            content: Text("Password changed"),
+                            backgroundColor: Colors.green,
+                            duration: Duration(seconds: 1),
+                          ),
+                        )
+                        .closed;
+                    Modular.to.pushReplacementNamed("/");
+                  },
+                );
+              },
+              child: Text("Change password"),
+            ),
+            ElevatedButton(
+              onPressed: () async {
                 (await Modular.get<IFirebaseAuthenticationUsecase>().signOut())
                     .fold(
                   (l) {
@@ -41,11 +70,12 @@ class _LoggedPageState extends State<LoggedPage> {
                         .showSnackBar(
                           SnackBar(
                             content: Text("Logged out"),
-                            backgroundColor: Colors.red,
+                            backgroundColor: Colors.green,
+                            duration: Duration(seconds: 1),
                           ),
                         )
                         .closed;
-                    Modular.to.pop();
+                    Modular.to.pushReplacementNamed("/");
                   },
                 );
               },

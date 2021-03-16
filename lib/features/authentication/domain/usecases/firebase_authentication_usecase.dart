@@ -11,6 +11,8 @@ abstract class IFirebaseAuthenticationUsecase {
   Future<Either<IFailure, UserCredential>> createUserWithEmailAndPassword(
       String email, String password);
 
+  Future<Either<IFailure, void>> sendPasswordResetEmail(String email);
+
   Future<Either<IFailure, void>> signOut();
 }
 
@@ -32,5 +34,11 @@ class FirebaseAuthenticationUsecase implements IFirebaseAuthenticationUsecase {
   @override
   Future<Either<IFailure, void>> signOut() {
     return Modular.get<IFirebaseAuthenticationRepository>().signOut();
+  }
+
+  @override
+  Future<Either<IFailure, void>> sendPasswordResetEmail(String email) {
+    return Modular.get<IFirebaseAuthenticationRepository>()
+        .sendPasswordResetEmail(email);
   }
 }

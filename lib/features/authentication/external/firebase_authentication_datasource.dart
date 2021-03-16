@@ -18,6 +18,11 @@ class FirebaseAuthenticationDatasource
   }
 
   @override
+  Future<void> sendPasswordResetEmail(String email) async {
+    return await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+  }
+
+  @override
   Future<void> signOut() async {
     return await FirebaseAuth.instance.signOut();
   }

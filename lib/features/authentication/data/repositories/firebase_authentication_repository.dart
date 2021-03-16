@@ -38,6 +38,18 @@ class FirebaseAuthenticationRepository
   }
 
   @override
+  Future<Either<IFailure, void>> sendPasswordResetEmail(String email) async {
+    try {
+      return Right(await Modular.get<IFirebaseAuthenticationDatasource>()
+          .sendPasswordResetEmail(email));
+    } on FirebaseAuthException catch (e) {
+      return Left(FirebaseAuthFailure(e.message));
+    } on Exception catch (e) {
+      return Left(UnexpectedFailure(e.toString()));
+    }
+  }
+
+  @override
   Future<Either<IFailure, void>> signOut() async {
     try {
       return Right(

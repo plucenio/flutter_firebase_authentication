@@ -54,9 +54,8 @@ class _LoginPageState extends State<LoginPage> {
                     );
                   },
                   (r) {
-                    Modular.to.pushNamedAndRemoveUntil(
+                    Modular.to.pushReplacementNamed(
                       LoggedPage.route,
-                      ModalRoute.withName("/"),
                     );
                   },
                 );
