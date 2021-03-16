@@ -1,6 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+
+import '../../domain/usecases/firebase_authentication_usecase.dart';
 
 class LoggedPage extends StatefulWidget {
   static String route = "/logged";
@@ -25,12 +26,28 @@ class _LoggedPageState extends State<LoggedPage> {
           children: <Widget>[
             ElevatedButton(
               onPressed: () async {
-                try {
-                  await FirebaseAuth.instance.signOut();
-                  Modular.to.pop();
-                } catch (e) {
-                  print(e);
-                }
+                (await Modular.get<IFirebaseAuthenticationUsecase>().signOut())
+                    .fold(
+                  (l) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(l.message),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  },
+                  (r) async {
+                    await ScaffoldMessenger.of(context)
+                        .showSnackBar(
+                          SnackBar(
+                            content: Text("Logged out"),
+                            backgroundColor: Colors.red,
+                          ),
+                        )
+                        .closed;
+                    Modular.to.pop();
+                  },
+                );
               },
               child: Text("Logout"),
             )

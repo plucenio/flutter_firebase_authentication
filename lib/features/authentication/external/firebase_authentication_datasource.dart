@@ -16,4 +16,9 @@ class FirebaseAuthenticationDatasource
     return await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password);
   }
+
+  @override
+  Future<void> signOut() async {
+    return await FirebaseAuth.instance.signOut();
+  }
 }

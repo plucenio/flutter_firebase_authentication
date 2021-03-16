@@ -8,4 +8,6 @@ abstract class IFirebaseAuthenticationRepository {
 
   Future<Either<IFailure, UserCredential>> createUserWithEmailAndPassword(
       String email, String password);
+
+  Future<Either<IFailure, void>> signOut();
 }

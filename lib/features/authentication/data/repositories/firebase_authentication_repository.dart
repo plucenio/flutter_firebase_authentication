@@ -36,4 +36,16 @@ class FirebaseAuthenticationRepository
       return Left(UnexpectedFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<IFailure, void>> signOut() async {
+    try {
+      return Right(
+          await Modular.get<IFirebaseAuthenticationDatasource>().signOut());
+    } on FirebaseAuthException catch (e) {
+      return Left(FirebaseAuthFailure(e.message));
+    } on Exception catch (e) {
+      return Left(UnexpectedFailure(e.toString()));
+    }
+  }
 }

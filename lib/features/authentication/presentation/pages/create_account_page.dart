@@ -45,13 +45,16 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       ),
                     );
                   },
-                  (r) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("${r.user.email} created."),
-                        backgroundColor: Colors.green,
-                      ),
-                    );
+                  (r) async {
+                    await ScaffoldMessenger.of(context)
+                        .showSnackBar(
+                          SnackBar(
+                            content: Text("${r.user.email} created."),
+                            backgroundColor: Colors.green,
+                          ),
+                        )
+                        .closed;
+                    Modular.to.pushReplacementNamed("/");
                   },
                 );
               },
