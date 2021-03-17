@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_authentication/features/authentication/domain/usecases/firebase_authentication_usecase.dart';
 import 'package:flutter_modular/flutter_modular.dart';

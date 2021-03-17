@@ -17,9 +17,9 @@ class _LoginPageState extends State<LoginPage> {
   var passwordController = TextEditingController();
   @override
   void initState() {
+    super.initState();
     emailController.clear();
     passwordController.clear();
-    super.initState();
   }
 
   @override
@@ -28,47 +28,52 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         title: Text("Login"),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextField(
-              controller: emailController,
-            ),
-            TextField(
-              controller: passwordController,
-              obscureText: true,
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                (await Modular.get<IFirebaseAuthenticationUsecase>()
-                        .signInWithEmailAndPassword(
-                            emailController.text, passwordController.text))
-                    .fold(
-                  (l) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(l.message),
-                        backgroundColor: Colors.red,
-                      ),
+      body: Container(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                TextField(
+                  controller: emailController,
+                ),
+                TextField(
+                  controller: passwordController,
+                  obscureText: true,
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    (await Modular.get<IFirebaseAuthenticationUsecase>()
+                            .signInWithEmailAndPassword(
+                                emailController.text, passwordController.text))
+                        .fold(
+                      (l) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(l.message),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      },
+                      (r) {
+                        Modular.to.pushReplacementNamed(
+                          LoggedPage.route,
+                        );
+                      },
                     );
                   },
-                  (r) {
-                    Modular.to.pushReplacementNamed(
-                      LoggedPage.route,
-                    );
+                  child: Text("Login"),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    Modular.to.pushNamed(CreateAccountPage.route);
                   },
-                );
-              },
-              child: Text("Login"),
+                  child: Text("Create account"),
+                )
+              ],
             ),
-            ElevatedButton(
-              onPressed: () async {
-                Modular.to.pushNamed(CreateAccountPage.route);
-              },
-              child: Text("Create account"),
-            )
-          ],
+          ),
         ),
       ),
     );
