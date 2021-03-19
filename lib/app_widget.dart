@@ -7,7 +7,8 @@ class AppWidget extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Firebase Authentication',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.teal,
+        secondaryHeaderColor: Colors.cyan,
       ),
     ).modular();
   }

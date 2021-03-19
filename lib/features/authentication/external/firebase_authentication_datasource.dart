@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_firebase_authentication/features/authentication/data/datasources_interfaces/firebase_authentication_datasource.dart';
+import 'package:flutter_firebase_authentication/features/authentication/data/datasources_interfaces/datasources.dart';
 
 class FirebaseAuthenticationDatasource
     implements IFirebaseAuthenticationDatasource {

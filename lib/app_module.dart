@@ -1,12 +1,10 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'features/authentication/data/datasources_interfaces/firebase_authentication_datasource.dart';
-import 'features/authentication/data/repositories/firebase_authentication_repository.dart';
-import 'features/authentication/domain/repositories_interfaces/firebase_authentication_repository.dart';
-import 'features/authentication/domain/usecases/firebase_authentication_usecase.dart';
-import 'features/authentication/external/firebase_authentication_datasource.dart';
-import 'features/authentication/presentation/pages/create_account_page.dart';
-import 'features/authentication/presentation/pages/logged_page.dart';
-import 'features/authentication/presentation/pages/login_page.dart';
+import 'package:flutter_firebase_authentication/features/authentication/data/datasources_interfaces/datasources.dart';
+import 'package:flutter_firebase_authentication/features/authentication/data/repositories/repositories.dart';
+import 'package:flutter_firebase_authentication/features/authentication/domain/repositories_interfaces/repositories.dart';
+import 'package:flutter_firebase_authentication/features/authentication/domain/usecases/usecases.dart';
+import 'package:flutter_firebase_authentication/features/authentication/external/external.dart';
+import 'package:flutter_firebase_authentication/features/authentication/presentation/pages/pages.dart';
 
 class AppModule extends Module {
   @override
@@ -24,14 +22,17 @@ class AppModule extends Module {
     ChildRoute(
       Modular.initialRoute,
       child: (_, __) => LoginPage(),
+      transition: TransitionType.fadeIn,
     ),
     ChildRoute(
       CreateAccountPage.route,
       child: (_, __) => CreateAccountPage(),
+      transition: TransitionType.fadeIn,
     ),
     ChildRoute(
       LoggedPage.route,
       child: (_, __) => LoggedPage(),
+      transition: TransitionType.fadeIn,
     ),
   ];
 }

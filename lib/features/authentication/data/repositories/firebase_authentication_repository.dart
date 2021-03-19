@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_firebase_authentication/core/errors/failures.dart';
-import 'package:flutter_firebase_authentication/features/authentication/data/datasources_interfaces/firebase_authentication_datasource.dart';
-import 'package:flutter_firebase_authentication/features/authentication/domain/repositories_interfaces/firebase_authentication_repository.dart';
+import 'package:flutter_firebase_authentication/features/authentication/data/datasources_interfaces/datasources.dart';
+import 'package:flutter_firebase_authentication/features/authentication/domain/repositories_interfaces/repositories.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class FirebaseAuthenticationRepository

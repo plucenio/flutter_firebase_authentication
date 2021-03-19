@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../domain/usecases/firebase_authentication_usecase.dart';
+import 'package:flutter_firebase_authentication/features/authentication/domain/usecases/usecases.dart';
 
 class LoggedPage extends StatefulWidget {
   static String route = "/logged";
