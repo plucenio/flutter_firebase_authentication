@@ -7,14 +7,17 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Firebase Authentication',
+      themeMode: ThemeMode.light,
       theme: ThemeData(
+        brightness: Brightness.light,
+        primaryColor: Colors.teal,
         primarySwatch: Colors.teal,
-        secondaryHeaderColor: Colors.cyan,
-        textTheme: Theme.of(context).textTheme.copyWith(
-              bodyText2: Theme.of(context).textTheme.bodyText2.copyWith(
-                    color: Colors.cyan,
-                  ),
-            ),
+        fontFamily: GoogleFonts.roboto().fontFamily,
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: Colors.deepPurple,
+        primarySwatch: Colors.deepPurple,
         fontFamily: GoogleFonts.roboto().fontFamily,
       ),
     ).modular();

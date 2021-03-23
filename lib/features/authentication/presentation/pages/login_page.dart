@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage>
                             child: Container(
                               child: Center(
                                 child: Text(
-                                  "Mensagem de teste",
+                                  "Crie sua conta gratuitamente!",
                                   style: TextStyle(
                                       fontSize: Theme.of(context)
                                               .textTheme
@@ -114,12 +114,11 @@ class _LoginPageState extends State<LoginPage>
                                 icon: Icon(Icons.email),
                                 labelText: 'Email',
                                 labelStyle: TextStyle(
-                                  color: Theme.of(context).secondaryHeaderColor,
+                                  color: Theme.of(context).primaryColor,
                                 ),
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
-                                      color: Theme.of(context)
-                                          .secondaryHeaderColor),
+                                      color: Theme.of(context).primaryColor),
                                 ),
                               ),
                               validator: (String value) {
@@ -137,12 +136,11 @@ class _LoginPageState extends State<LoginPage>
                                 icon: Icon(Icons.lock),
                                 labelText: 'Senha',
                                 labelStyle: TextStyle(
-                                  color: Theme.of(context).secondaryHeaderColor,
+                                  color: Theme.of(context).primaryColor,
                                 ),
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
-                                      color: Theme.of(context)
-                                          .secondaryHeaderColor),
+                                      color: Theme.of(context).primaryColor),
                                 ),
                               ),
                             ),
@@ -170,6 +168,14 @@ class _LoginPageState extends State<LoginPage>
                                         LoggedPage.route,
                                       );
                                     },
+                                  );
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                          "É necessário informar um email válido."),
+                                      backgroundColor: Colors.amber,
+                                    ),
                                   );
                                 }
                               },

@@ -18,7 +18,7 @@ class FirebaseAuthenticationRepository
               .signInWithEmailAndPassword(email, password);
       return Right(userCredential);
     } on FirebaseAuthException catch (e) {
-      return Left(FirebaseAuthFailure(e.message));
+      return Left(_getFailureByCode(e));
     } on Exception catch (e) {
       return Left(UnexpectedFailure(e.toString()));
     }
@@ -33,7 +33,7 @@ class FirebaseAuthenticationRepository
               .createUserWithEmailAndPassword(email, password);
       return Right(userCredential);
     } on FirebaseAuthException catch (e) {
-      return Left(FirebaseAuthFailure(e.message));
+      return Left(_getFailureByCode(e));
     } on Exception catch (e) {
       return Left(UnexpectedFailure(e.toString()));
     }
@@ -45,16 +45,7 @@ class FirebaseAuthenticationRepository
       return Right(await Modular.get<IFirebaseAuthenticationDatasource>()
           .sendPasswordResetEmail(email));
     } on FirebaseAuthException catch (e) {
-      if (e.code.toLowerCase() == user_not_found) {
-        return Left(
-          FirebaseAuthFailure(
-              "Email não encontrado, você pode criar uma nova conta com este e-mail"),
-        );
-      } else {
-        return Left(
-          FirebaseAuthFailure(e.message),
-        );
-      }
+      return Left(_getFailureByCode(e));
     } on Exception catch (e) {
       return Left(UnexpectedFailure(e.toString()));
     }
@@ -66,9 +57,18 @@ class FirebaseAuthenticationRepository
       return Right(
           await Modular.get<IFirebaseAuthenticationDatasource>().signOut());
     } on FirebaseAuthException catch (e) {
-      return Left(FirebaseAuthFailure(e.message));
+      return Left(_getFailureByCode(e));
     } on Exception catch (e) {
       return Left(UnexpectedFailure(e.toString()));
+    }
+  }
+
+  IFailure _getFailureByCode(FirebaseAuthException e) {
+    if (e.code.toLowerCase() == user_not_found) {
+      return FirebaseAuthFailure(
+          "Email não encontrado, você pode criar uma nova conta com este e-mail");
+    } else {
+      return FirebaseAuthFailure(e.message);
     }
   }
 }
