@@ -28,10 +28,12 @@ class _LoginPageState extends State<LoginPage>
 
   @override
   Widget build(BuildContext context) {
-    var sizeAnimation = SizeTween(begin: Size(450, 450), end: Size(500, 500))
-        .animate(animationController);
+    var factor = 1.1;
+    var sizeAnimation =
+        SizeTween(begin: Size(400, 400), end: Size(400 * factor, 400 * factor))
+            .animate(animationController);
     var sizeTextAnimation =
-        Tween(begin: 2.25, end: 2.5).animate(animationController);
+        Tween(begin: 1, end: factor).animate(animationController);
     var opacityAnimation =
         Tween(begin: 0.5, end: 0.8).animate(animationController);
     final _formKey = GlobalKey<FormState>();
@@ -66,18 +68,22 @@ class _LoginPageState extends State<LoginPage>
                             opacity: opacityAnimation.value,
                             child: Container(
                               child: Center(
-                                  child: Text(
-                                "Mensagem de teste",
-                                style: TextStyle(
-                                    fontSize: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1
-                                            .fontSize *
-                                        sizeTextAnimation.value),
-                              )),
-                              color: Colors.white,
+                                child: Text(
+                                  "Mensagem de teste",
+                                  style: TextStyle(
+                                      fontSize: Theme.of(context)
+                                              .textTheme
+                                              .headline5
+                                              .fontSize *
+                                          sizeTextAnimation.value),
+                                ),
+                              ),
                               height: sizeAnimation.value.height,
                               width: sizeAnimation.value.width,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white,
+                              ),
                             ),
                           );
                         },
@@ -175,6 +181,47 @@ class _LoginPageState extends State<LoginPage>
                                 Modular.to.pushNamed(CreateAccountPage.route);
                               },
                               child: Text("Criar conta"),
+                            ),
+                            const SizedBox(height: 10),
+                            ElevatedButton(
+                              onPressed: () async {
+                                if (_formKey.currentState.validate()) {
+                                  (await Modular.get<
+                                              IFirebaseAuthenticationUsecase>()
+                                          .sendPasswordResetEmail(
+                                              emailController.text))
+                                      .fold(
+                                    (l) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(l.message),
+                                          backgroundColor: Colors.red,
+                                        ),
+                                      );
+                                    },
+                                    (r) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                              "Um email para gerar uma nova senha foi enviado."),
+                                          backgroundColor: Colors.green,
+                                        ),
+                                      );
+                                    },
+                                  );
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                          "É necessário informar um email válido."),
+                                      backgroundColor: Colors.amber,
+                                    ),
+                                  );
+                                }
+                              },
+                              child: Text("Esqueci minha senha"),
                             )
                           ],
                         ),
