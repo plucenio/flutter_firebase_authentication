@@ -6,20 +6,13 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Firebase Authentication',
-      themeMode: ThemeMode.light,
-      theme: ThemeData(
-        brightness: Brightness.light,
-        primaryColor: Colors.teal,
-        primarySwatch: Colors.teal,
-        fontFamily: GoogleFonts.roboto().fontFamily,
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        primaryColor: Colors.deepPurple,
-        primarySwatch: Colors.deepPurple,
-        fontFamily: GoogleFonts.roboto().fontFamily,
-      ),
-    ).modular();
+        title: 'Flutter Firebase Authentication',
+        themeMode: ThemeMode.light,
+        theme: ThemeData(
+          brightness: Brightness.light,
+          primaryColor: Colors.teal,
+          primarySwatch: Colors.teal,
+          fontFamily: GoogleFonts.roboto().fontFamily,
+        )).modular();
   }
 }

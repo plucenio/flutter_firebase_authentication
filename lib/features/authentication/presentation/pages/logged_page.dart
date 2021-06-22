@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-
 import 'package:flutter_firebase_authentication/features/authentication/domain/usecases/usecases.dart';
 
 class LoggedPage extends StatefulWidget {
@@ -15,6 +14,7 @@ class _LoggedPageState extends State<LoggedPage> {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   bool darkTheme = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,17 +22,9 @@ class _LoggedPageState extends State<LoggedPage> {
         centerTitle: true,
         title: Text("Logged"),
         actions: [
-          Switch(
-            value: darkTheme,
-            onChanged: (o) {
-              setState(() {
-                darkTheme = o;
-              });
-            },
-          ),
           IconButton(
             tooltip: "Alterar senha",
-            icon: Icon(Icons.email),
+            icon: Icon(Icons.lock),
             onPressed: () async {
               (await Modular.get<IFirebaseAuthenticationUsecase>()
                       .sendPasswordResetEmail("plucenio@hotmail.com"))
@@ -99,9 +91,6 @@ class _LoggedPageState extends State<LoggedPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  FlutterLogo(
-                    size: 100,
-                  ),
                   ElevatedButton(
                     child: Text("Pacientes"),
                     onPressed: () {},
@@ -125,11 +114,22 @@ class _LoggedPageState extends State<LoggedPage> {
               ),
             ),
           ),
-          Container(
-            child: Expanded(
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[],
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: ListView(
+                      children: [
+                        Text("Teste"),
+                        Text("Teste"),
+                        Text("Teste"),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
